@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- PNG-filer för moderna webbläsare -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <!-- Apple Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <!-- Android and PWA -->
+    <link rel="icon" sizes="512x512" href="android-chrome-512x512.png">
+    <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">
+
+    <title>Uppgift 4 - Animering</title>
+    <link rel="stylesheet" href="css/main.scss">
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/mobilemeny.js"></script>
+    <script type="module" src="js/themeswitcher.js"></script>
+    <script type="module" src="js/animate.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <button id="theme-toggle">Byt tema</button>
+        <h1>Animering</h1>
+        <nav id="main-menu">
+            <ul>
+                <li><a href="index.html">Start</a></li>
+                <li><a href="pictures.html">Bilder</a></li>
+                <li><a href="sass.html">Sass</a></li>
+                <li class="activelink"><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+                
+            </ul>
+        </nav>
+        <!-- Knapp för att öppna menyn -->
+        
+
+        <button class="menu-btn open" id="open-menu">
+            <span class="menu-icon">
+                <span class="bars"></span>
+                <span class="bars"></span>
+                <span class="bars"></span>
+            </span>
+            <span class="menu-text">Meny</span>
+        </button>
+        <!-- Navigering -->
+        <nav id="nav-menu">
+            <!-- Knapp för utfälld meny -->
+            <button class="menu-btn close" id="close-menu">
+                <span class="menu-icon">
+                    <span class="bars cross1"></span>
+                    <span class="bars cross2"></span>
+                </span>
+                <span class="menu-text">Stäng</span>
+            </button>
+            <ul>
+                <li><a href="index.html">Start</a></li>
+                <li><a href="pictures.html">Bilder</a></li>
+                <li><a href="sass.html">Sass</a></li>
+                <li class="activelink"><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>                
+            </ul>
+
+
+        </nav>
+    </header>
+    <main>
+        <section id="info">
+            <article id="textanimation">
+                <h2>Animeringar - text</h2>
+                <p>Här finns tre olika keyframes. De har olika värden för olika egenskaper. På alla finns det mer än en egenskap som förändras.</p>
+                <p class="fromleft">Att lära sig animeringar med hjälp av transform, transition och keyframes är nytt för mig. </p>
+                    <p class="fromright">Det finns mycket kreativt att hitta på.</p>
+                
+            <p class="fromtop">Detta är kul!
+                <br><span class="smalltext">och lite irriterande.</span>
+            </p>
+            </article>
+            <article id="imagezoom">
+                <h2>Animering - bild</h2>
+                <p>För musen över bilden för att se effekten</p>
+                <div class="imageanimationholder">
+                    <picture>
+                        <source srcset="pictures/insekt.jpg?as=avif" type="image/avif">
+                        <source srcset="pictures/insekt.jpg?as=webp" type="image/webp">
+                        <img src="pictures/insekt.jpg" alt="Insekt" class="imageanimate">
+                    </picture>
+                    
+                </div>
+                
+            </article>
+            <article id="interactiveanimation">
+                <h2>Animering - interaktiv</h2>
+                <p>Använd startknappen för att flytta lådan!</p>
+                <div id="animatedElement"><p>Flytta mig!</p></div>
+                <button id="animatestart">Start!</button>
+                <h2>Övrig animering</h2>
+                <p>Jag har infört animering på knappar och menyer så bakgrunden förändas "över tid" vid hovring. </p>
+                <p>Jag har också en animering på visningen av mobilmenyn.</p>
+            </article>
+        </section>
+    </main>
+    
+</body>
+</html>

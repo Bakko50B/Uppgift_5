@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- PNG-filer för moderna webbläsare -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <!-- Apple Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <!-- Android and PWA -->
+    <link rel="icon" sizes="512x512" href="android-chrome-512x512.png">
+    <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">
+
+    <title>Uppgift 5 - Sass</title>
+    <link rel="stylesheet" href="css/main.scss">
+    <script src="js/main.js" type="module"></script>
+    <script type="module" src="js/mobilemeny.js"></script>
+    <script type="module" src="js/themeswitcher.js"></script>
+</head>
+
+<body>
+    <header>
+        <button id="theme-toggle">Byt tema</button>
+        <h1>Sass</h1>
+        <nav id="main-menu">
+            <ul>
+                <li><a href="index.html">Start</a></li>
+                <li><a href="pictures.html">Bilder </a></li>
+                <li class="activelink"><a href="sass.html">Sass</a></li>
+                <li><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+            </ul>
+        </nav>
+
+        <button class="menu-btn open" id="open-menu">
+            <span class="menu-icon">
+                <span class="bars"></span>
+                <span class="bars"></span>
+                <span class="bars"></span>
+            </span>
+            <span class="menu-text">Meny</span>
+        </button>
+        <!-- Navigering -->
+        <nav id="nav-menu">
+            <!-- Knapp för utfälld meny -->
+            <button class="menu-btn close" id="close-menu">
+                <span class="menu-icon">
+                    <span class="bars cross1"></span>
+                    <span class="bars cross2"></span>
+                </span>
+                <span class="menu-text">Stäng</span>
+            </button>
+            <ul>
+                <li><a href="index.html">Start</a></li>
+                <li><a href="pictures.html">Bilder</a></li>
+                <li class="activelink"><a href="sass.html">Sass</a></li>
+                <li><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+            </ul>
+
+
+        </nav>
+    </header>
+    <main>
+        <section id="info">
+            <article>
+                <h1 id="starttitle">SASS</h1>
+
+                <h2>Sass</h2>
+                <p>
+                    I Frontendkursens tredje uppgift skall vi styla webbsidor med en CSS-preprocessor. I kursen lär vi
+                    oss att använda Sass.
+                </p>
+                <p> I tidigare uppgifter i kursen har vi använt Parcel. Parcel är ett verktyg som minifierar och
+                    automatiserar kod som ligger bakom rendering av webbsidor. Parcel hanterar css, JavaScript och html.
+                    <br>
+                    Parcel har också inbyggt stöd för SASS.
+                </p>
+                <p>
+                    <br>Arbetsfilerna i Sass kan inte tolkas av webbläsare utan de måste kompileras till css-filer.
+                    Till stor del bygger Sassfilerna på vanlig css-kod, men erbjuder en hel del bra tillägg.
+                </p>
+                <p>I uppgiften ingår det att använda:</p>
+                <ul>
+                    <li>
+                        Överskrifter och text med valfritt innehåll.
+                    </li>
+                    <li>
+                        Undersidan SASS ska innehålla en utvärdering av ditt arbete med SASS. Vilka för- och nackdelar
+                        ser du med SASS? Hur var det att komma igång att arbete med en CSS-preprocessor?
+                    </li>
+                    <li>
+                        En huvudmeny med minst fem meny-alternativ (kan länkas till enbart "#").
+                    </li>
+                    <li>
+                        Webbplatsen ska ha stöd för ljust och mörkt tema med media query. Ta fram två färgscheman för
+                        detta.
+                    </li>
+                    <li>
+                        Responsiv webbdesign, både på innehåll och meny. Ska fungera väl på stora och små enheter.
+                    </li>
+                    <li>
+                        Minst två stycken bilder av något slag.
+                    </li>
+                </ul>
+
+                <p><br>Webbplatsens CSS-kod ska genereras från SASS-kod. Följande saker ska (minimum) finnas med:</p>
+
+                <ul>
+                    <li>
+                        Variabler (minst färgschema ska lagras i variabler)
+                    </li>
+                    <li>
+                        Color functions (darken och lighten ska som minst användas, men använd gärna fler)
+                    </li>
+                    <li>
+                        Nesting
+                    </li>
+                    <li>
+                        Mixins
+                    </li>
+                    <li>
+                        Selector inheritance (nyckelordet "@extend")
+                    </li>
+                    <li>
+                        If/else-satser
+                    </li>
+                    <li>
+                        Minst en partial
+                    </li>
+                    <li>
+                        Partials med en god filstruktur för CSS-kod
+                    </li>
+                </ul>
+
+            </article>
+            <article>
+                <h3>Innehåll</h3>
+                <P>Vissa av de efterfrågade saker som webbplatsen ska innehålla hade jag lite svårt att hitta en vettig
+                    användning för. Jag är dock i princip helt säker på att jag använt all önskad funktionalitet.</P>
+                <p>På <a href="pictures.html">Bildersidan</a> har jag använt en @mixin med både if och else-satser. Den
+                    skapade @mixin inkluderas sedan i tre olika klasser som används för att skapa en ram runt bilderna.
+                    Detta utifrån de givna parametranas värde. Inte världens snyggaste ramar men det fungerar i alla
+                    fall som jag tänkt.
+                    <br>En av parametrarna är en boolean som avgör om det ska finnas en box-shadow eller inte.
+                </p>
+
+                <p>Att använda nesting och arv kändes väldigt naturligt för mig. Att sätta in selektorer inom
+                    selektorerna som man gör i nesting är tydligt. Likadant att göra en "basklass" som återanvänds i
+                    andra klasser/selektorer känns naturligt.</p>
+
+                <p>Jag har testat att mitt skript för visning av förinställt val på ljust eller mörkt tema fungerar. Jag
+                    har även en lagring i LocalStorage som tar hand om det val som användaren gör av tema. Om den
+                    variabeln inte finns väljs automatiskt systemets eller webbläsarens förinställning av ljust eller
+                    mörkt.
+                    <br>I sökningen efter lösningen av att kunna välja tema har jag lär mig en hel del. Jag hittade en
+                    lösning som använde window.matchMedia som jag viadareutvecklade för mina behov. Hanteringen av
+                    media-query sker i både javascriptfil och i css-regel.
+                </p>
+                <p>
+                    Jag har använt variabler i uppgiften. Dessa sätts som värden främst i "vanliga" css-variabler. Jag
+                    försökte att använda SASS-variablerna direkt men insåg sedan att de skrivs om till ren css, vilket
+                    inte vanlga css-variabler gör. Så för att hantera ljust och mörkt tema har jag en kombination av
+                    Sass och css variabler.
+
+                </p>
+
+                <p>Min kod finns i en viss struktur. Dock har jag inte fullt utnyuttjat idén bakom 7-1 strukturen. Dock
+                    finns det endast ett anrop till en scss-fil från webbsidorna.
+                    <br> Jag har använt partials med andra ord.
+                    <br>Även JavaScript&shy;koden är uppdelade i olika filer.
+                </p>
+                <h2>Testning</h2>
+                <p>Som alltid vid kodning av webbsidor gör jag tester. För att mina ljus/mörk inställningar skulle
+                    fungera bra så använde jag manipulering av färgvärden. Jag använde först lighten och darken som
+                    uppgiften föreskriver. Jag fick dock ett meddelande i utvecklingsmiljön att dessa sätt att
+                    manipulera färger i Sass kommer att försvinna. Därför valde jag att använda en nyare typ av
+                    färgmanipulation, color.adjust.</p>
+                <p>Sannolikt dröjer det en bra stund innan de "kravställda" funktionerna utfasas, men jag kontrollerade
+                    med lärare på kursen om det gick bra att byta ut dessa mot den kommande standarden vilket det var.
+                    Jag valde då den lösningen.</p>
+                <p>Att detta krav för uppgiften tas upp under testning är just av den anledningen att jag fick fel på
+                    kontrasterna om jag inte justerade färgerna. Det var den informationen som "Wave" gav mig i alla
+                    fall.</p>
+                <p>Sidorna är fullt fungerande på de webbläsare jag använt under utvecklingsarbetet.
+                    <br>Test i Lighthouse är också genomförda, med bra resultat.
+                </p>
+
+            </article>
+            <article>
+                <h2>Utvärdering</h2>
+                <div class="text-container">
+                    <p>Att komma igång med Sass var relativt enkelt. Då jag använde en Broilerplate som förlaga baserad
+                        på
+                        Parcel var egentligen användandet redan igång. Det som behövs för att använda Sass är att skapa
+                        en
+                        scss-fil där koden skrivs. I detta skede känner Parcel automatiskt av att det är Sasskod som ska
+                        användas och kompileras till css.
+                    </p>
+                    <p>Sass har stöd för två olika filtyper, dels den ovan nämnda scss och även filer med ändelsen
+                        .sass.
+                        Eftersom jag jobbat en del med css redan så kändes det enklare att använda scss-filer, då de
+                        skrivs
+                        på liknande sätt som css.</p>
+                    <h3>Problem</h3>
+                    <p>Som jag redan skrivit om i en tidigare uppgift om Parcel, så har jag upplevt en mängd krascher av
+                        servern. Dessa fortsätter även nu med arbetet med denna uppgift. Det har även tillkommit en
+                        ytterligare typ av krasch som jag inte upplevt innan jag började använda Sass.</p>
+                    <p>Den nya typen av krasch genererar ett annat felmeddelande. Oftast med resultat att jag behöver
+                        stänga min utvecklingsmiljö och starta om den. Ibland har jag även behövt starta om datorn för att jag
+                        ska kunna fortsätta att arbeta.</p>
+                    <p>Det är ganska frustrerande att stöta på denna typ av krångel eftersom tanken med Parcel är att
+                        göra utvecklingsarbetet lättare och mer effektivt.
+                        Självklart har jag även googlat på denna typ av fel för att försöka hitta en
+                        lösning. Dock utan framgång.
+                        <br> Tillsvidare lever jag med krånglet.
+                        <br> Det tar för mycket tid att söka efter lösningar på problemet.
+                    </p>
+                    <p>Jag uppskattar den hjälp jag fått, nu senast av Malin Larsson som är lärare på kursen, med tips
+                        för att avhjälpa problemen. Alla tips förutom att stänga av antivirus&shy;programmet är testade. Jag
+                        är för feg för att leva utan antivirus. Hellre kraschar!</p>
+                    <h3>Avslutningsvis</h3>
+                    <p>Användandet av Sass eller alernativa preprocessorer ser jag ett stort värde av. Det känns som en
+                        nödvändighet speciellt i stora projekt. Användning av nesting, partials, variabler med mera
+                        hjälper till med att får en bra struktur på webbplatsen. <br>Struktur gillar vi! </p>
+                    <p>Jag har egentligen inte sett någon nackdel med att använda en preprocessor. Möjligen att det för min
+                        del inneburit ännu fler krascher under utvecklingsarbetet. Men man överlever även det.</p>
+                </div>
+
+            </article>
+
+
+        </section>
+    </main>
+    <footer>
+        <div id="date"></div>
+    </footer>
+
+</body>
+
+</html>

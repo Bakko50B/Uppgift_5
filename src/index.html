@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- PNG-filer för moderna webbläsare -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <!-- Apple Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <!-- Android and PWA -->
+    <link rel="icon" sizes="512x512" href="android-chrome-512x512.png">
+    <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">
+
+    <title>Uppgift 5 - start</title>
+    <link rel="stylesheet" href="css/main.scss">
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/mobilemeny.js"></script>
+    <script type="module" src="js/themeswitcher.js"></script>
+</head>
+
+<body>
+    <header>
+        <button id="theme-toggle">Byt tema</button>
+        <h1>Sass</h1>
+        <nav id="main-menu">
+            <ul>
+                <li class="activelink"><a href="index.html">Start</a></li>
+                <li><a href="pictures.html">Bilder</a></li>
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="animate.html">Animering</a></li>
+                <li><a href="diagram.html">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+
+            </ul>
+        </nav>
+        <!-- Knapp för att öppna menyn -->
+
+
+        <button class="menu-btn open" id="open-menu">
+            <span class="menu-icon">
+                <span class="bars"></span>
+                <span class="bars"></span>
+                <span class="bars"></span>
+            </span>
+            <span class="menu-text">Meny</span>
+        </button>
+        <!-- Navigering -->
+        <nav id="nav-menu">
+            <!-- Knapp för utfälld meny -->
+            <button class="menu-btn close" id="close-menu">
+                <span class="menu-icon">
+                    <span class="bars cross1"></span>
+                    <span class="bars cross2"></span>
+                </span>
+                <span class="menu-text">Stäng</span>
+            </button>
+            <ul>
+                <li class="activelink"><a href="index.html">Start</a></li>
+                <li><a href="pictures.html">Bilder</a></li>
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+            </ul>
+
+
+        </nav>
+    </header>
+
+    <main>
+        <!-- Styla denna på egen hand -->
+        <section id="info">
+
+
+            <h1 id="starttitle">Frontend</h1>
+            <article>
+                <h2>Uppgift 3 - Sass</h2>
+                <p>På sidan <a href="sass.html">sass</a> kan du ta del av processen och mina erfarenheter av att använda
+                    Sass för att hantera stylingen av dessa sidor.</p>
+
+                <p>På sidan <a href="pictures.html">Bilder</a> finns några bilder stylade med mixins.</p>
+            </article>
+            <article>
+                <h2>Uppgift 4 - Animering</h2>
+                <p>På sidan <a href="animate.html">animate</a> finns de olika lösningarna på animeringsuppgifterna.</p>
+            </article>
+
+
+
+        </section>
+
+    </main>
+    <footer>
+        <div id="date"></div>
+    </footer>
+</body>
+
+</html>

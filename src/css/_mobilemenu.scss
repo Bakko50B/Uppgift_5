@@ -1,0 +1,131 @@
+@use "variables" as *;
+
+/* Byggd på Malin Larssons förlaga. Ändrad efter eget behov */
+
+#main-menu {
+    display: none;
+}
+
+#nav-menu {
+    background-color: $nav-color;
+    font-size: 2rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    display: none;
+    opacity: 0;
+    transition: opacity 1200ms;
+
+    ul {
+        display: block;
+        width: 100%;
+        list-style-type: none;
+        text-align: center;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    li {
+        padding: 0.8 rem 0;
+        width: 100%;
+        transition: background-color .5s linear; // införd till uppgift 4
+    }
+
+    a {
+        color: $text-color;
+        text-decoration: none;
+        padding: 0 1rem;
+        font-size: 1.4rem;
+    }
+
+    li:hover {
+        background-color: $hover-color;
+        cursor: pointer;
+    }
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background-color: $nav-color;
+    border: $header-color solid 1px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color .5s linear;
+}
+
+.menu-btn:hover {
+    background-color: $hover-color;
+}
+
+.open {
+    margin: 0 1rem;
+    padding: 5px 8px;
+}
+
+.menu-icon {
+    margin-right: 10px;
+}
+
+// tre streck i hamburgermenyn
+.bars {
+    display: block;
+    width: 20px;
+    height: 3px;
+    background-color: $text-color;
+    margin: 5px 0;
+}
+
+.menu-text {
+    font-size: 1.2rem;
+    color: $text-color;
+}
+
+// stängknapp för menyn
+.close {
+    margin: 1rem 1.5rem;
+    padding: 10px 15px;
+}
+
+//roterar två streck
+.cross1 {
+    width: 25px;
+    transform: rotate(45deg);
+    position: relative;
+    top: 5px;
+}
+
+.cross2 {
+    width: 25px;
+    transform: rotate(135deg);
+    position: relative;
+    top: -3px;
+}
+
+#open-menu {
+    width: fit-content;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: -0.7px; //Negativ marginal då den visade sig med en liten marginal.
+}
+
+/* Stylineg fordrar två olika menyer. Valt med avsikt*/
+@media only screen and (min-width: 800px) {
+
+    #main-menu {
+        display: block;
+    }
+
+    #nav-menu {
+        display: none;
+    }
+
+    #open-menu {
+        display: none;
+    }
+    
+}

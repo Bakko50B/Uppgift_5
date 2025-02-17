@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- PNG-filer för moderna webbläsare -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+
+    <!-- Apple Touch Icons -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+
+    <!-- Android and PWA -->
+    <link rel="icon" sizes="512x512" href="android-chrome-512x512.png">
+    <link rel="icon" sizes="192x192" href="android-chrome-192x192.png">
+
+    <title>Uppgift 5 - Bilder</title>
+    <link rel="stylesheet" href="css/main.scss">
+    <script src="js/main.js" type="module"></script>
+    <script type="module" src="js/mobilemeny.js"></script>
+    <script type="module" src="js/themeswitcher.js"></script>
+</head>
+
+<body>
+    <header>
+        <button id="theme-toggle">Byt tema</button>
+        <h1>Bilder</h1>
+        <nav id="main-menu">
+            <ul>
+                <li><a href="index.html">Start</a></li>
+                <li class="activelink"><a href="pictures.html">Bilder</a></li>
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+            </ul>
+        </nav>
+
+        <button class="menu-btn open" id="open-menu">
+            <span class="menu-icon">
+                <span class="bars"></span>
+                <span class="bars"></span>
+                <span class="bars"></span>
+            </span>
+            <span class="menu-text">Meny</span>
+        </button>
+        <!-- Navigering -->
+        <nav id="nav-menu">
+            <!-- Knapp för utfälld meny -->
+            <button class="menu-btn close" id="close-menu">
+                <span class="menu-icon">
+                    <span class="bars cross1"></span>
+                    <span class="bars cross2"></span>
+                </span>
+                <span class="menu-text">Stäng</span>
+            </button>
+            <ul>
+                <li><a href="index.html">Start</a></li>
+                <li class="activelink"><a href="pictures.html">Bilder</a></li>
+                <li><a href="sass.html">Sass</a></li>
+                <li><a href="animate.html">Animering</a></li>
+                <li><a href="diagram">Diagram</a></li>
+                <li><a href="map.html">Karta</a></li>
+            </ul>
+
+
+        </nav>
+    </header>
+    <main>
+        <section id="info">
+            <h1 id="starttitle">Bilder</h1>
+
+            <div class="imageholder">
+                <picture>
+                    <source srcset="pictures/Sunset.jpg?as=avif&width=800" type="image/avif" />
+                    <source srcset="pictures/Sunset.jpg?as=webp&width=800" type="image/webp" />
+                    <img src="pictures/Sunset.jpg" alt="Solnedgång över Vänern" class="image-solid">
+                </picture><p>Solnedgång över Vänern!</p>
+            
+                
+                <picture>
+                    <source srcset="pictures/Blasippa.jpg?as=avif&width=800" type="image/avif" />
+                    <source srcset="pictures/Blasippa.jpg?as=webp&width=800" type="image/webp" />
+                    <img src="pictures/Blasippa.jpg?as=jpg&width=800" alt="Blåsippor" class="image-dotted">
+                </picture>
+                <p>Växtkraft deluxe - Blåsippor!</p>
+            
+            <picture>
+                <source srcset="pictures/Sunflower.jpg?as=avif&width=800" type="image/avif" />
+                <source srcset="pictures/Sunflower.jpg?as=webp&width=800" type="image/webp" />
+                <img src="pictures/Sunflower.jpg?as=jpg&width=800" alt="Solrosfält" class="image-dashed">
+            </picture>
+            <p>Solrosfält i Uppland!</p>
+            </div>
+        </section>
+
+    </main>
+    <footer>
+        <div id="date"></div>
+    </footer>
+
+</body>
+
+</html>

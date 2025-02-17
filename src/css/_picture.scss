@@ -1,0 +1,52 @@
+@use "variables" as *;
+@use "sass:color";
+
+/* Används på bilder.html*/
+
+// Mixin för bildramar med färg och effekter med if/else :)
+@mixin image-border-effect($border-type: solid, $border-color: $default-border-color, $border-width: 1px, $shadow: false, $radius: 0) {
+  @if $border-type == solid {
+    border: $border-width solid $border-color;
+  } @else if $border-type == dashed {
+    border: $border-width dashed $border-color;
+  } @else if $border-type == dotted {
+    border: $border-width dotted $border-color;
+  } @else {
+    border: $border-width solid $border-color; 
+  }
+
+  @if $shadow {
+    box-shadow: 10px 25px 25px rgba(123, 121, 121, 0.89);
+  }
+
+  @if $radius > 0 {
+    border-radius: $radius;
+  } @else {
+    border-radius: 0;
+  }
+}
+
+// Klass för dashed border
+.image-dashed {
+  @include image-border-effect(dashed, green, 15px, true, 20px);
+}
+
+// Klass för dotted border
+.image-dotted {
+  @include image-border-effect(dotted, red, 15px, false, 50px);
+}
+
+// Klass för solid border
+.image-solid {
+  @include image-border-effect(solid, blue, 15px, true, 150px);
+}
+.imageholder {
+  text-align: center;
+  max-width: 100%;
+
+  img {
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
