@@ -1,4 +1,5 @@
 "use strict";
+import Chart from 'chart.js/auto';
 
 window.onload = () => {
     getInfo();
