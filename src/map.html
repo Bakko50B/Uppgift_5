@@ -20,15 +20,21 @@
     
         <title>Uppgift 5 - karta</title>
         <link rel="stylesheet" href="css/main.scss">
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script> 
+        <script type="module" src="js/map.js"></script>
         <script type="module" src="js/main.js"></script>
         <script type="module" src="js/mobilemeny.js"></script>
         <script type="module" src="js/themeswitcher.js"></script>
+
+        <!-- Test -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     </head>
     
 <body>
     <header>
         <button id="theme-toggle">Byt tema</button>
-        <h1>Sass</h1>
+        <h1>Karta</h1>
         <nav id="main-menu">
             <ul>
                 <li class="activelink"><a href="index.html">Start</a></li>
@@ -73,6 +79,25 @@
 
         </nav>
     </header>
+        <!-- Sökfält -->
+        <main>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Skriv en plats, t.ex. Göteborg" />
+                <button id="search-button">Sök</button>
+            </div>
+             <!-- Karta -->
+        <div id="map"></div>
+        </main>
+    
+       
+    
+        
+        
+        
+
+<footer>
+    <div id="date"></div>
+</footer>
     
 </body>
 </html>
