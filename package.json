@@ -12,13 +12,14 @@
   "description": "",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.13.3",
-    "chart.js": "^4.4.7",
     "parcel": "^2.13.3",
     "rimraf": "^6.0.1",
     "sharp": "^0.33.5"
   },
   "browserslist": "> 1%, last 2 versions, not dead",
   "dependencies": {
+    "chart.js": "^4.4.7",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "glob": "^11.0.1"
   }
 }

@@ -1,0 +1,23 @@
+@mixin chartformat{
+    background-color: white;
+    border-radius: 10px;
+}
+
+#stapeldiagram {
+    @include chartformat();
+    max-height: 500px; /* Öka höjden */
+}
+    
+
+
+#piediagram {  
+    @include chartformat();
+    width: 100%;
+}
+
+@media screen and (max-width: 800px) {
+
+    #stapeldiagram {
+        max-height: 380px; /* Öka höjden */
+    }
+}
