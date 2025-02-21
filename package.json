@@ -20,6 +20,7 @@
   "dependencies": {
     "chart.js": "^4.4.7",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "glob": "^11.0.1"
+    "glob": "^11.0.1",
+    "jsdoc": "^4.0.4"
   }
 }
