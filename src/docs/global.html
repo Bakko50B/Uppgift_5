@@ -152,7 +152,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line17">line 17</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -170,16 +170,26 @@
 
         
             
-<h4 class="name" id="chartInstance"><span class="type-signature"></span>chartInstance<span class="type-signature"></span></h4>
+<h4 class="name" id="chartInstance"><span class="type-signature"></span>chartInstance<span class="type-signature"> :Chart</span></h4>
 
 
 
 
 <div class="description">
-    variabel för att hantera instansen av chart. Den måste förstöras om storleksändring av skärmen sker
+    En instans av ett StapelChart som används för att visa data i ett stapeldigram<br>Den sätts vid instansiering av ett stapeldiagram
 </div>
 
 
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Chart</span>
+
+
+        </li>
+    </ul>
 
 
 
@@ -214,7 +224,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line111">line 111</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -276,7 +286,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line105">line 105</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line110">line 110</a>
     </li></ul></dd>
     
 
@@ -480,13 +490,85 @@
 
         
             
-<h4 class="name" id="top6Courses"><span class="type-signature"></span>top6Courses<span class="type-signature"> :Array.&lt;Object></span></h4>
+<h4 class="name" id="piechartInstance"><span class="type-signature"></span>piechartInstance<span class="type-signature"> :Chart</span></h4>
 
 
 
 
 <div class="description">
-    Global variabel för att lagra all data de mest sökta kursernaUrvalet sker i getinfo()
+    En instans av ett PieChart som används för att visa data i ett cirkeldiagram.Sätter den vid skapande av Chart
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Chart</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line213">line 213</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="top5Programs"><span class="type-signature"></span>top5Programs<span class="type-signature"> :Array.&lt;Object></span></h4>
+
+
+
+
+<div class="description">
+    Global variabel för att lagra all data de 5 mest sökta programmen<br>Urvalet sker i getinfo()
 </div>
 
 
@@ -534,7 +616,79 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line26">line 26</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="top6Courses"><span class="type-signature"></span>top6Courses<span class="type-signature"> :Array.&lt;Object></span></h4>
+
+
+
+
+<div class="description">
+    Global variabel för att lagra all data de 6 mest sökta kurserna<br>Urvalet sker i getinfo()
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;Object></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -562,7 +716,7 @@
     
 
     
-    <h4 class="name" id="createStapleChart"><span class="type-signature"></span>createStapleChart<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+    <h4 class="name" id="createPieChart"><span class="type-signature"></span>createPieChart<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
     
 
     
@@ -570,7 +724,7 @@
 
 
 <div class="description">
-    Skapa ett stapeldiagram med data från top6Courses.Funktionen hämtar kursnamn och antalet sökande från den filtrerade och sorterade arrayen top6Courses,och skapar ett stapeldiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
+    Skapa ett pajdiagram med data från top5Programs.Funktionen hämtar programnamn och antalet sökande från den filtrerade och sorterade arrayen top5Programs,och skapar ett pajdiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
 </div>
 
 
@@ -614,7 +768,185 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line113">line 113</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line215">line 215</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">void</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="createStapleChart"><span class="type-signature"></span>createStapleChart<span class="signature">(ctx, config)</span><span class="type-signature"> &rarr; {void}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Skapa ett stapeldiagram med data från top6Courses.Funktionen hämtar kursnamn och antalet sökande från den filtrerade och sorterade arrayen top6Courses,och skapar ett stapeldiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>ctx</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">HTMLElement</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Canvas element där diagrammet ska ritas.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>config</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Konfiguration för diagrammet.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
@@ -720,7 +1052,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line77">line 77</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -830,7 +1162,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line33">line 33</a>
+        <a href="diagram.js.html">diagram.js</a>, <a href="diagram.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -1033,13 +1365,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#applicants">applicants</a></li><li><a href="global.html#chartInstance">chartInstance</a></li><li><a href="global.html#createStapleChart">createStapleChart</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#getFontSize">getFontSize</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#marker">marker</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#top6Courses">top6Courses</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#applicants">applicants</a></li><li><a href="global.html#chartInstance">chartInstance</a></li><li><a href="global.html#createPieChart">createPieChart</a></li><li><a href="global.html#createStapleChart">createStapleChart</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#getFontSize">getFontSize</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#marker">marker</a></li><li><a href="global.html#piechartInstance">piechartInstance</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#top5Programs">top5Programs</a></li><li><a href="global.html#top6Courses">top6Courses</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Feb 21 2025 12:53:43 GMT+0100 (centraleuropeisk normaltid)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Feb 21 2025 13:59:01 GMT+0100 (centraleuropeisk normaltid)
 </footer>
 
 <script> prettyPrint(); </script>

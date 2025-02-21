@@ -1,5 +1,7 @@
 "use strict";
+
 import Chart from 'chart.js/auto';
+
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 // Registrera pluginet
@@ -14,30 +16,27 @@ window.onload = () => {
  * @global
  * @type {Array<Object>}
  */
-let applicants = [];    
+let applicants = [];
 
 /**
- * Global variabel för att lagra all data de mest sökta kurserna
+ * Global variabel för att lagra all data de 6 mest sökta kurserna
  *<br>
  * Urvalet sker i getinfo()
  * 
  * @global
  * @type {Array<Object>}
  */
-let top6Courses = [];   // Innehåller de 6 mest sökta kurserna
+let top6Courses = [];
 
 /**
- * Global variabel för att lagra all data de mest sökta kurserna
+ * Global variabel för att lagra all data de 5 mest sökta programmen
  *<br>
- * Urvalet sker i getinfo() med top6Courses.map(course => course.name);
+ * Urvalet sker i getinfo()
  * 
  * @global
  * @type {Array<Object>}
  */
-let StapelLabels = [];  
-let StapelData = [];    // Array för att ta emot top6Courses.map(course => course.applicantsTotal)
-
-let top5Programs = [];  // Innehåller de 5 mest sökta programmen
+let top5Programs = [];
 
 /**
  * Hämta information om kurser och program från en API-endpoint och bearbeta data.
@@ -60,26 +59,22 @@ async function getInfo() {
         applicants = await response.json();        //data till globala variabeln
 
         const filteredCourses = applicants.filter(course => course.type === "Kurs");   // filtrerar ut kurserna
-        // Sortera de filtrerade kurserna efter antal sökande
-        const sortedCourses = filteredCourses.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
-        // Ta de 6 mest sökta kurserna
-        top6Courses = sortedCourses.slice(0, 6);
-
-       
-        console.table(top6Courses);
-        // console.table(courses);
+        const sortedCourses = filteredCourses.sort((a, b) => b.applicantsTotal - a.applicantsTotal); // sorterar i stroleksordning på flest totala söknade
+        top6Courses = sortedCourses.slice(0, 6); // Ta de 6 mest sökta kurserna
 
         const filteredPrograms = applicants.filter(course => course.type === "Program");    // filtrerar ut programmen
-        // Sortera de filtrerade kurserna efter antal sökande
-        const sortedPrograms = filteredPrograms.sort((a, b) => b.applicantsTotal - a.applicantsTotal);
-        top5Programs = sortedPrograms.slice(0, 5)
-        // console.table(top5Programs);
+        const sortedPrograms = filteredPrograms.sort((a, b) => b.applicantsTotal - a.applicantsTotal);// Sortera de filtrerade kurserna efter antal sökande
+        top5Programs = sortedPrograms.slice(0, 5) // Ta de 5 mest sökta programmen
+
+        //Skapa stapeldiagrammet
         createStapleChart();
+        //Skapa cirkeldiagrammet 
         createPieChart();
     }
     catch (error) {
         console.error(error);
-        // document.querySelector("#errormessage").innerHTML = "<p>Fel vid hämntning av informationen!</p>";
+        document.querySelector("#errormessage").innerHTML = "<p>Fel vid hämtning av informationen!</p>";
+        document.querySelector("#info").style.display = "none";
     }
 }
 
@@ -92,7 +87,7 @@ async function getInfo() {
  * @returns {number} Fontstorleken i pixlar baserat på fönstrets bredd.
  */
 
-function getFontSize() {    
+function getFontSize() {
     if (window.innerWidth < 600) { // Mindre fontstorlek för mobiler
         return 12;
     } else if (window.innerWidth < 900) { // Mellanstor font för tablets
@@ -104,20 +99,23 @@ function getFontSize() {
 
 
 // Lyssna på fönstrets storleksändring och uppdatera diagrammet
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     createStapleChart();
     createPieChart();
 });
+
 /**
  * variabel för att visa stapeldiagrammet på webbsidan
  */
 const ctx = document.getElementById('stapeldiagram');
 
 /**
- * variabel för att hantera instansen av chart. Den måste förstöras om storleksändring av skärmen sker
- * 
+ * En instans av ett StapelChart som används för att visa data i ett stapeldigram
+ * <br>
+ * Den sätts vid instansiering av ett stapeldiagram
+ * @type {Chart}
  */
-let chartInstance;  
+let chartInstance;
 
 /**
  * Skapa ett stapeldiagram med data från top6Courses.
@@ -127,27 +125,20 @@ let chartInstance;
  * 
  * @function createStapleChart
  * @returns {void}
+ * @param {HTMLElement} ctx - Canvas element där diagrammet ska ritas.
+ * @param {Object} config - Konfiguration för diagrammet.
  */
-
 function createStapleChart() {
-    /**
-     * Hämtar ut kursnamnet från den filtrerade och sorterade arrayen top6Courses och sätter den till Labels (array)
-     * @type {Array<string>}
-     */
 
-    // let StapelLabels = top6Courses.map(course => course.name);     
-    /**
-     *  Sätter antalet totalsökande till arrayen StapelData mha .mapfunktionen.  
-     */ 
-    StapelData = top6Courses.map(course => course.applicantsTotal)
+    // Labels med kursnamn    
+    const StapelLabels = top6Courses.map(course => course.name);
 
+    //Sätter antalet totalsökande till arrayen StapelData mha .mapfunktionen.   
+    const StapelData = top6Courses.map(course => course.applicantsTotal);
 
     const fontSize = getFontSize();
 
-    /** 
-     * Döda "instansen" om den finns så chart.js kan skapa nytt diagram vid ä
-     * ändring av stolrken av skärm
-    */
+    // Döda "instansen" om den finns så chart.js kan skapa nytt diagram vid ändring av storleken av skärm
     if (chartInstance) {
         chartInstance.destroy();
     }
@@ -155,7 +146,7 @@ function createStapleChart() {
     chartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: StapelLabels, 
+            labels: StapelLabels,
             datasets: [{
                 label: 'Totalt antal sökande',
                 backgroundColor: 'rgb(249, 53, 95)', // Färg på staplarna
@@ -169,25 +160,22 @@ function createStapleChart() {
                     anchor: 'center',
                     font: {
                         weight: 'bold',
-                        size: fontSize // Använd dynamisk fontstorle
+                        size: fontSize // Använd dynamisk fontstorlek
                     },
                     rotation: -90, // Vrid texten 90 grader
-                    formatter: function(value, context) {
+                    formatter: function (value, context) {
                         // Dela upp texten i flera rader om den är för lång
                         const label = StapelLabels[context.dataIndex];
                         const maxLength = 36; // Max antal tecken per rad
                         if (label.length > maxLength) {
-                            const chunks = label.match(new RegExp('.{1,' + maxLength + '}', 'g')); // Dela upp etiketten i bitar ('g' hela strängen)
-                            return chunks.join('\n'); // Sätt ihop bitarna ochh lägg till radbrytning mellan bitarna
+                            const chunks = label.match(new RegExp('.{1,' + maxLength + '}', 'g'));  // Dela upp etiketten i bitar ('g' hela strängen)
+                            return chunks.join('\n');                                               // Sätt ihop bitarna ochh lägg till radbrytning mellan bitarna
                         }
                         return label;
                     },
-                                        /** Lägg till för att bryta texten om den är för lång
-                                         * Inaktivera automatiskt textbrytande
-                                        */
-                    wordWrap: true       
+                    wordWrap: true
                 }
-                
+
             }]
         },
         options: {
@@ -204,7 +192,7 @@ function createStapleChart() {
                     suggestedMax: Math.max(...StapelData),
                     ticks: {
                         stepSize: 100, // Mindre steglängd för fler steg
-                       color: 'rgb(0, 0, 0)' // Färg på y-axelns etiketter
+                        color: 'rgb(0, 0, 0)' // Färg på y-axelns etiketter
                     }
                 }
             },
@@ -217,7 +205,23 @@ function createStapleChart() {
     });
 }
 
+/**
+ * En instans av ett PieChart som används för att visa data i ett cirkeldiagram.
+ * <br>
+ * Sätter den vid skapande av Chart
+ * @type {Chart}
+ */
 let piechartInstance;
+
+/**
+ * Skapa ett pajdiagram med data från top5Programs.
+ * 
+ * Funktionen hämtar programnamn och antalet sökande från den filtrerade och sorterade arrayen top5Programs,
+ * och skapar ett pajdiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
+ * 
+ * @function createPieChart
+ * @returns {void}
+ */
 
 function createPieChart() {
     // Hämta programnamn och sökandeantal från top5Programs
@@ -262,7 +266,7 @@ function createPieChart() {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             const label = context.label || '';
                             const value = context.raw || 0;
                             return label + ': ' + value + ' sökande';
@@ -275,7 +279,7 @@ function createPieChart() {
                         weight: 'bold',
                         size: fontSize // Använd dynamisk fontstorlek
                     },
-                    formatter: function(value, context) {
+                    formatter: function (value, context) {
                         // Anpassa texten som visas på cirkeldiagrammet
                         return value;
                     },
