@@ -8,6 +8,14 @@ let closeBtn = document.getElementById("close-menu");
 openBtn.addEventListener("click", toggleMenu);
 closeBtn.addEventListener("click", toggleMenu);
 
+/**
+ * Funktion för att växla visningen av navigeringsmenyn.
+ *<br>
+ Växelvis visas respektive döljs mobilmenyn (hamburgerstil)
+ * @function
+ * @name toggleMenu
+ * @returns {void}
+ */
 function toggleMenu() {
     let navMenuEl = document.getElementById("nav-menu");
 

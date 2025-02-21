@@ -1,5 +1,11 @@
 "use strict";
 /* JS-fil för hanteringa av temabyte */
+
+/**
+ * Växlar tema mellan mörkt och ljust läge.
+ * @file Hanterar temabyte.
+ */
+
 const themeToggle = document.getElementById("theme-toggle");
 const currentTheme = localStorage.getItem("theme");
 

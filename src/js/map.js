@@ -1,24 +1,48 @@
 /**
-* Skapar en karta med Leaflet och centrerar den på en specifik position.
-* 
-* @constant {Object} map - Leaflet-kartobjektet.
-* @property {Function} setView - Metod som sätter kartans centrum och zoomnivå.
-* @param {string} 'map' - ID för HTML-elementet där kartan kommer att renderas.
-* @param {Array<number>} [59.3293, 18.0686] - Array med latitud och longitud för kartans centrum.
-* @param {number} 5 - Zoomnivå för kartan.
-*/
+ * Skapar en karta med Leaflet och centrerar den på en specifik position.
+ * 
+ * @constant {Object} map - Leaflet-kartobjektet.
+ * @property {Function} setView - Metod som sätter kartans centrum och zoomnivå.
+ * @param {string} 'map' - ID för HTML-elementet där kartan kommer att renderas.
+ * @param {Array<number>} [59.3293, 18.0686] - Array med latitud och longitud för kartans centrum.
+ * @param {number} 5 - Zoomnivå för kartan.
+ */
 const map = L.map('map').setView([59.3293, 18.0686], 5);
 
-// Lägg till OpenStreetMap-tilelayer
+/**
+ * Lägg till en OpenStreetMap-tile layer till en Leaflet-karta.
+ * 
+ * @param {object} map - En Leaflet-karta som tile layer ska läggas till.
+ */
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
 /**
- * Variabel för att innehålla longitud och latitud
+ * Variabel för att innehålla markören
  */
-
 let marker;
+
+/**
+ * Flytta kartan och lägg till en markör vid specifika koordinater.
+ * 
+ * @param {number} lat - Latitud för markören.
+ * @param {number} lon - Longitud för markören.
+ * @param {string} displayName - Namn som ska visas i popupen.
+ */
+function addMarker(lat, lon, displayName) {
+    // Flytta kartan
+    map.setView([lat, lon], 12); //inzoomad
+
+    // Om markör redan finns - ta bort den
+    if (marker) map.removeLayer(marker);
+
+    // Lägg till en ny markör
+    marker = L.marker([lat, lon])
+        .addTo(map)
+        .bindPopup(`<strong>${displayName}</strong>`)
+        .openPopup();
+}
 
 /**
  * Sök plats med Nominatim OpenStreetMap API och flytta kartan samt lägg till markör.
@@ -38,12 +62,13 @@ async function searchLocation() {
         return;
     }
 
+    // Kombinerar den färdiga urln nedan med det som kommer från sökfältet
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
-
+    // använder url för att hämta positionen på kartan
     try {
         const response = await fetch(url, {
             headers: {
-                'User-Agent': 'MinKartaFrontend/1.0 (tolu2403@student.miun.se)' 
+                'User-Agent': 'MinKartaFrontend/1.0 (tolu2403@student.miun.se)'
             }
         });
         const data = await response.json();
@@ -52,16 +77,7 @@ async function searchLocation() {
             const { lat, lon, display_name } = data[0];
 
             // Flytta kartan och lägg till markör
-            map.setView([lat, lon], 12);
-
-            // Om markör redan finns - ta bort den
-            if (marker) map.removeLayer(marker);
-
-            // Lägg till en ny markör
-            marker = L.marker([lat, lon])
-                .addTo(map)
-                .bindPopup(`<strong>${display_name}</strong>`)
-                .openPopup();
+            addMarker(lat, lon, display_name);
         } else {
             alert('Ingen plats hittades!');
         }
@@ -70,6 +86,31 @@ async function searchLocation() {
         alert('Kunde inte söka platsen. Kontrollera din internetanslutning.');
     }
 }
+
+/**
+ * Hämta GPS-position och flytta kartan samt lägg till markör.
+ */
+function getGPSPos() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+
+            console.log(latitude);
+            console.log(longitude);
+
+            // Flytta kartan och lägg till markör
+            addMarker(latitude, longitude, "Din position");
+        }, function (error) {
+            console.error("Fel vid hämtning av position: " + error.message);
+        });
+    } else {
+        console.error("Webbläsaren stöder inte geolokalisering!");
+    }
+}
+
+// Lägg till händelselyssnare för GPS-knappen
+document.getElementById("gps-button").addEventListener("click", getGPSPos);
 
 
 /**
@@ -94,3 +135,80 @@ document.getElementById('search-input').addEventListener('keypress', (e) => {
     }
 });
 
+/**
+ * Kontrollerar om webbläsaren har stöd för geolokalisering
+ * 
+ */
+
+function getGPSPos() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+
+            console.log(latitude);
+            console.log(longitude);
+
+            // Flytta kartan och lägg till markör
+            map.setView([latitude, longitude], 12);
+            addMarker(latitude, longitude, "Din position");
+        }, function (error) {
+            console.error("Fel vid hämtning av position: " + error.message);
+        });
+    } else {
+        console.error("Webbläsaren stöder inte geolokalisering!");
+    }
+}
+
+document.getElementById("gps-button").addEventListener("click", getGPSPos);
+
+// getGPSPos();
+//En version att testa
+/**
+ * 
+ * 
+ * 
+ * // Skapa kartan
+const map = L.map('map').setView([initialLat, initialLon], initialZoom);
+
+// Lägg till OpenStreetMap tile layer
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Variabel för markören
+let marker;
+
+// Funktion för att hämta GPS-position
+function getGPSPos() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+
+            console.log(latitude);
+            console.log(longitude);
+
+            // Flytta kartan och lägg till markör
+            map.setView([latitude, longitude], 12);
+
+            // Om markör redan finns - ta bort den
+            if (marker) map.removeLayer(marker);
+
+            // Lägg till en ny markör
+            marker = L.marker([latitude, longitude])
+                .addTo(map)
+                .bindPopup(`<strong>Din position</strong>`)
+                .openPopup();
+        }, function (error) {
+            console.error("Fel vid hämtning av position: " + error.message);
+        });
+    } else {
+        console.error("Webbläsaren stöder inte geolokalisering!");
+    }
+}
+
+// Lägg till händelselyssnare för GPS-knappen
+document.getElementById("gps-button").addEventListener("click", getGPSPos);
+
+ */

@@ -1,0 +1,15 @@
+{
+    "tags": {
+      "allowUnknownTags": true,
+      "dictionaries": ["jsdoc"]
+    },
+    "source": {
+      "include": ["src/js"],
+      "exclude": ["node_modules"]
+    },
+    "opts": {
+      "destination": "src/docs",
+      "recurse": true
+    }
+  }
+  
