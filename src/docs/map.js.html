@@ -27,15 +27,16 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
-* Skapar en karta med Leaflet och centrerar den på en specifik position.
-* 
-* @constant {Object} map - Leaflet-kartobjektet.
-* @property {Function} setView - Metod som sätter kartans centrum och zoomnivå.
-* @param {string} 'map' - ID för HTML-elementet där kartan kommer att renderas.
-* @param {Array&lt;number>} [59.3293, 18.0686] - Array med latitud och longitud för kartans centrum.
-* @param {number} 5 - Zoomnivå för kartan.
-*/
+ * Skapar en karta med Leaflet och centrerar den på en specifik position.
+ * 
+ * @constant {Object} map - Leaflet-kartobjektet.
+ * @property {Function} setView - Metod som sätter kartans centrum och zoomnivå.
+ * @param {string} 'map' - ID för HTML-elementet där kartan kommer att renderas.
+ * @param {Array&lt;number>} [59.3293, 18.0686] - Array med latitud och longitud för kartans centrum.
+ * @param {number} 5 - Zoomnivå för kartan.
+ */
 const map = L.map('map').setView([59.3293, 18.0686], 5);
+
 /**
  * Lägg till en OpenStreetMap-tile layer till en Leaflet-karta.
  * 
@@ -46,10 +47,30 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 /**
- * Variabel för att innehålla longitud och latitud
+ * Variabel för att innehålla markören
  */
-
 let marker;
+
+/**
+ * Flytta kartan och lägg till en markör vid specifika koordinater.
+ * 
+ * @param {number} lat - Latitud för markören.
+ * @param {number} lon - Longitud för markören.
+ * @param {string} displayName - Namn som ska visas i popupen.
+ */
+function addMarker(lat, lon, displayName) {
+    // Flytta kartan
+    map.setView([lat, lon], 12); //inzoomad
+
+    // Om markör redan finns - ta bort den
+    if (marker) map.removeLayer(marker);
+
+    // Lägg till en ny markör
+    marker = L.marker([lat, lon])
+        .addTo(map)
+        .bindPopup(`&lt;strong>${displayName}&lt;/strong>`)
+        .openPopup();
+}
 
 /**
  * Sök plats med Nominatim OpenStreetMap API och flytta kartan samt lägg till markör.
@@ -69,12 +90,13 @@ async function searchLocation() {
         return;
     }
 
+    // Kombinerar den färdiga urln nedan med det som kommer från sökfältet
     const url = `https://nominatim.openstreetmap.org/search?format=json&amp;q=${encodeURIComponent(query)}`;
-
+    // använder url för att hämta positionen på kartan
     try {
         const response = await fetch(url, {
             headers: {
-                'User-Agent': 'MinKartaFrontend/1.0 (tolu2403@student.miun.se)' 
+                'User-Agent': 'MinKartaFrontend/1.0 (tolu2403@student.miun.se)'
             }
         });
         const data = await response.json();
@@ -83,16 +105,7 @@ async function searchLocation() {
             const { lat, lon, display_name } = data[0];
 
             // Flytta kartan och lägg till markör
-            map.setView([lat, lon], 12);
-
-            // Om markör redan finns - ta bort den
-            if (marker) map.removeLayer(marker);
-
-            // Lägg till en ny markör
-            marker = L.marker([lat, lon])
-                .addTo(map)
-                .bindPopup(`&lt;strong>${display_name}&lt;/strong>`)
-                .openPopup();
+            addMarker(lat, lon, display_name);
         } else {
             alert('Ingen plats hittades!');
         }
@@ -101,6 +114,31 @@ async function searchLocation() {
         alert('Kunde inte söka platsen. Kontrollera din internetanslutning.');
     }
 }
+
+/**
+ * Hämta GPS-position och flytta kartan samt lägg till markör.
+ */
+function getGPSPos() {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+
+            console.log(latitude);
+            console.log(longitude);
+
+            // Flytta kartan och lägg till markör
+            addMarker(latitude, longitude, "Din position");
+        }, function (error) {
+            console.error("Fel vid hämtning av position: " + error.message);
+        });
+    } else {
+        console.error("Webbläsaren stöder inte geolokalisering!");
+    }
+}
+
+// Lägg till händelselyssnare för GPS-knappen
+document.getElementById("gps-button").addEventListener("click", getGPSPos);
 
 
 /**
@@ -125,6 +163,33 @@ document.getElementById('search-input').addEventListener('keypress', (e) => {
     }
 });
 
+
+//   function getaaaGPSPos() {
+//     if ("geolocation" in navigator) {
+//         navigator.geolocation.getCurrentPosition(function (position) {
+//             let latitude = position.coords.latitude;
+//             let longitude = position.coords.longitude;
+
+//             console.log(latitude);
+//             console.log(longitude);
+
+    
+//             map.setView([latitude, longitude], 12);
+//             addMarker(latitude, longitude, "Din position");
+//         }, function (error) {
+//             console.error("Fel vid hämtning av position: " + error.message);
+//         });
+//     } else {
+//         console.error("Webbläsaren stöder inte geolokalisering!");
+//     }
+// }
+
+// document.getElementById("gps-button").addEventListener("click", getGPSPos);
+//   * 
+//   * 
+//  */
+
+
 </code></pre>
         </article>
     </section>
@@ -135,13 +200,13 @@ document.getElementById('search-input').addEventListener('keypress', (e) => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#applicants">applicants</a></li><li><a href="global.html#chartInstance">chartInstance</a></li><li><a href="global.html#createPieChart">createPieChart</a></li><li><a href="global.html#createStapleChart">createStapleChart</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#getFontSize">getFontSize</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#marker">marker</a></li><li><a href="global.html#piechartInstance">piechartInstance</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#top5Programs">top5Programs</a></li><li><a href="global.html#top6Courses">top6Courses</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addMarker">addMarker</a></li><li><a href="global.html#applicants">applicants</a></li><li><a href="global.html#chartInstance">chartInstance</a></li><li><a href="global.html#createPieChart">createPieChart</a></li><li><a href="global.html#createStapleChart">createStapleChart</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#getFontSize">getFontSize</a></li><li><a href="global.html#getGPSPos">getGPSPos</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#marker">marker</a></li><li><a href="global.html#piechartInstance">piechartInstance</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#top5Programs">top5Programs</a></li><li><a href="global.html#top6Courses">top6Courses</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Feb 21 2025 18:52:37 GMT+0100 (centraleuropeisk normaltid)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Feb 21 2025 19:54:45 GMT+0100 (centraleuropeisk normaltid)
 </footer>
 
 <script> prettyPrint(); </script>
