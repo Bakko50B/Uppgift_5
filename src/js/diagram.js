@@ -157,7 +157,7 @@ let chartInstance;
  * @function createStapleChart
  * @returns {void}
  * @param {HTMLElement} ctx - Canvas element där diagrammet ska ritas.
- * @param {Object} config - Konfiguration för diagrammet.
+ * @param {Object} options - Konfiguration för diagrammet.
  */
 function createStapleChart() {
 
@@ -254,8 +254,12 @@ let piechartInstance;
  * Funktionen hämtar programnamn och antalet sökande från den filtrerade och sorterade arrayen top5Programs,
  * och skapar ett pajdiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
  * 
+ *  Observera: Denna funktion använder den globala variabeln `top5Programs` som redan är satt.
+ * 
  * @function createPieChart
  * @returns {void}
+ * @param {HTMLElement} ctx - Canvas element där diagrammet ska ritas.
+ * @param {Object} options - Konfiguration för diagrammet.
  */
 
 function createPieChart() {
