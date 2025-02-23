@@ -38,6 +38,21 @@ let top6Courses = [];
  */
 let top5Programs = [];
 
+
+/**
+ * Sorterar och begränsar data baserat på typ och antal sökande.
+ * @param {Array} data - Arrayen av dataobjekt att filtrera och sortera.
+ * @param {string} type - Typen av objekt att filtrera (t.ex. "Kurs" eller "Program").
+ * @param {number} limit - Antalet objekt att returnera efter sortering.
+ * @returns {Array} En array med de sorterade och begränsade objekten.
+ */
+function sortByApplicants(data, type, limit) {
+    return data
+        .filter(item => item.type === type)
+        .sort((a, b) => b.applicantsTotal - a.applicantsTotal)
+        .slice(0, limit);
+}
+
 /**
  * Hämta information om kurser och program från en API-endpoint och bearbeta data.
  * 
@@ -58,13 +73,16 @@ async function getInfo() {
         }
         applicants = await response.json();        //data till globala variabeln
 
-        const filteredCourses = applicants.filter(course => course.type === "Kurs");   // filtrerar ut kurserna
-        const sortedCourses = filteredCourses.sort((a, b) => b.applicantsTotal - a.applicantsTotal); // sorterar i stroleksordning på flest totala söknade
-        top6Courses = sortedCourses.slice(0, 6); // Ta de 6 mest sökta kurserna
+        //const filteredCourses = applicants.filter(course => course.type === "Kurs");   // filtrerar ut kurserna
+        //const sortedCourses = filteredCourses.sort((a, b) => b.applicantsTotal - a.applicantsTotal); // sorterar i stroleksordning på flest totala söknade
+        //top6Courses = sortedCourses.slice(0, 6); // Ta de 6 mest sökta kurserna
 
-        const filteredPrograms = applicants.filter(course => course.type === "Program");    // filtrerar ut programmen
-        const sortedPrograms = filteredPrograms.sort((a, b) => b.applicantsTotal - a.applicantsTotal);// Sortera de filtrerade kurserna efter antal sökande
-        top5Programs = sortedPrograms.slice(0, 5) // Ta de 5 mest sökta programmen
+        top6Courses = sortByApplicants(applicants, "Kurs", 6);
+        top5Programs = sortByApplicants(applicants, "Program", 5);
+
+        //const filteredPrograms = applicants.filter(course => course.type === "Program");    // filtrerar ut programmen
+        //const sortedPrograms = filteredPrograms.sort((a, b) => b.applicantsTotal - a.applicantsTotal);// Sortera de filtrerade kurserna efter antal sökande
+        //top5Programs = sortedPrograms.slice(0, 5) // Ta de 5 mest sökta programmen
 
         //Skapa stapeldiagrammet
         createStapleChart();
