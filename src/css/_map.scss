@@ -1,10 +1,12 @@
 #search-container {
+    max-width: 100%;
     margin: 20px;
     display: flex;
     gap: 10px;
 }
 
 #search-input {
+    width: 80%;
     flex: 1;
     padding: 10px;
     font-size: 1.1em;
