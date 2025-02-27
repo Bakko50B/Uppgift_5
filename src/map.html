@@ -29,6 +29,7 @@
 
         <!-- Test -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        
     </head>
     
 <body>
@@ -82,12 +83,13 @@
         <!-- Sökfält -->
         <main>
             <div id="search-container">
-                <input type="text" id="search-input" placeholder="Skriv en plats, t.ex. Göteborg" />
+                <input type="text" id="search-input" placeholder="Skriv en plats, t.ex. Sundsvall" />
                 <button id="search-button">Sök</button>
                 <button id="gps-button">GPS</button>
             </div>
+            <div id="mapinfo" ><p class="smalltext">Klicka på kartan för att hitta namnet på platsen!</p></div>
              <!-- Karta -->
-        <div id="map"></div>
+        <div id="map" title="Klicka på kartan för att se information om den plats du klickar på!"></div>
         </main>
     
        

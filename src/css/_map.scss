@@ -1,6 +1,6 @@
 #search-container {
     max-width: 100%;
-    margin: 20px;
+    // margin: 10px;
     display: flex;
     gap: 10px;
 }
@@ -8,13 +8,14 @@
 #search-input {
     width: 80%;
     flex: 1;
-    padding: 10px;
+    padding: 3px;
     font-size: 1.1em;
     border: 2px solid #070707;
     border-radius: 5px;
 }
 
-#search-button, #gps-button {
+#search-button,
+#gps-button {
     padding: 10px 20px;
     background-color: #28a745;
     color: #fff;
@@ -22,6 +23,7 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+
     &:hover {
         background-color: #218838;
     }
@@ -35,4 +37,29 @@
     border: 2px solid #070707;
     border-radius: 5px;
     z-index: 10;
+}
+
+
+
+@media screen and (max-width: 600px) {
+
+    #search-container {
+        margin: 10px;
+        gap: 5px;
+    }
+
+    #search-input {
+        padding: 2px;
+        font-size: 1em;
+    }
+
+    #map {
+        height: 75vh;
+    }
+
+    #search-button,
+    #gps-button {
+        padding: 0px 6px;
+    }
+
 }

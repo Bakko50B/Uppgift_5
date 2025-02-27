@@ -135,4 +135,51 @@ document.getElementById('search-input').addEventListener('keypress', (e) => {
     }
 });
 
+/**
+ * Hanterar klickhändelser på kartan för att hämta och visa platsnamn i en popup.
+ * 
+ * Använder Leaflets inbyggda händelselyssnare
+ * 
+ * Funktionen lyssnar på klickhändelser på Leaflet-kartan och skickar en omvänd geokodningsförfrågan 
+ * till Nominatim OpenStreetMap API för att få platsens namn baserat på klickade koordinater. 
+ * Om en plats hittas, visas platsens namn i en popup.
+ * 
+ * @async
+ * @function
+ * @param {L.Map} map - Leaflet-kartan som lyssnar på klickhändelser.
+ * @returns {void} Visar en popup med platsens namn eller en varning om ingen plats hittas.
+ */
+map.on('click', async function (e) {
+    const { lat, lng } = e.latlng;
+
+    // Anropa Nominatim API för omvänd geokodning
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`;
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'MinKartaFrontend/1.0 (tolu2403@student.miun.se)'
+            }
+        });
+        const data = await response.json();
+
+        // Om en plats hittas, visa platsens namn i en popup
+        if (data && data.display_name) {
+            const displayName = data.display_name;
+
+            // Om markör redan finns - ta bort den
+            if (marker) map.removeLayer(marker);
+
+            // Lägg till en ny markör vid klickpositionen
+            marker = L.marker([lat, lng])
+                .addTo(map)
+                .bindPopup(`<strong>${displayName}</strong>`)
+                .openPopup();
+        } else {
+            alert('Ingen plats hittades vid den klickade positionen!');
+        }
+    } catch (error) {
+        console.error('Fel vid API-anrop:', error);
+        alert('Kunde inte hämta platsnamnet. Något gick fel!');
+    }
+});
 

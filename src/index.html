@@ -92,6 +92,76 @@
                 <h2>Uppgift 4 - Animering</h2>
                 <p>På sidan <a href="animate.html">animate</a> finns de olika lösningarna på animeringsuppgifterna.</p>
             </article>
+            <article>
+                <h2>Uppgift 5 - Dynamiska webbplatser</h2>
+                <p>Uppgift 5 ska genomföras med hjälp av att på egen hand läsa dokumentation för de olika momenten som
+                    ingår i uppgiften. </p>
+                <h3>Ingående moment</h3>
+                <ul>
+                    <li>Diagram</li>
+                    <li>Karta</li>
+                    <li>Dokumentation</li>
+                </ul>
+                <h4>Diagram</h4>
+                <p>På sidan <a href="diagram.html"> diagram</a> finns min lösning på denna uppgift. Jag har använt <a
+                        href="https://www.chartjs.org/">chart.js</a> för att skapa de olika diagramen som uppgiften ska
+                    innehålle. För bättre styling av tabellen och dess data har jag använt <a
+                        href="https://chartjs-plugin-datalabels.netlify.app/guide/getting-started.html">chartjs-plugin-datalabels.</a>
+                </p>
+                <p>Jag har installerat chart js och chartjs-plugin-datalabels som mpn moduler i min Parceldrivna
+                    webbplats.</p>
+                <h4>Karta</h4>
+                <p>På sidan <a href="map.html">karta</a> finns en karta med sökmöjligheter. Utöver att söka på plats
+                    finns det även en positionsmöjlighet där platsen man är på visas. För att använda denna funktion
+                    krävs att användaren tillåter GPS-positionering via webbläsarens gränssnitt.</p>
+                <p>Tekniken jag använt på sidan karta (<a href="map.html">map.html</a>) är <a
+                        href="https://nominatim.org/">Nominatim</a>,<a href="https://www.openstreetmap.org/">
+                        OpenStreetMap</a> och <a href="https://leafletjs.com/">Leaflet</a>.</p>
+                <h4>Dokumentation</h4>
+                <p>Jag har använt <a href="https://jsdoc.app/">JSDocs</a> för dokumentation av min JavaScriptkod. Dock
+                    framgår det inte i uppgiftbeskrivningen hur dokumentationen ska redovisas i uppgiften.
+                    <br>Jag har fått JS Docs att fungera i min utvecklingsmiljö och genererat dokumentation över min
+                    kod. I dagsläget finns det dock inte någon publik länk till de genererade html-sidor som visar
+                    dokumentationen.
+                </p>
+                <h3>Erfarenheter - slutsats</h3>
+                <p>Att få jobba på egen hand med dessa uppgifter har varit kul. En del saker flöt på väldigt bra, medan
+                    annat tog längre tid. Att visa diagram på den statistik som skulle inhämtas flöt på relativt lätt.
+                <h4>Diagram</h4>
+                De inbyggda jsfunktionerna som <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort">sort</a>
+                och <a
+                    href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>
+                kom väl till pass. </p>
+                <p>Att producera både stapeldiagram och cirkeldiagram gick ganska bra. Dock behövdes det lite css-kod
+                    för att få stapeldiagrammet "lagom" högt.</p>
+                <p>En svårare uppgift att lösa var att placera texten som beskriver vad staplarna representerar. <br>
+                    Som standard visas den texten under staplarna med en lutning på några grader. För att lättare kunnaF
+                    avgöra vad som staplarna representerar ville jag placera texten inne i staplarna. För att lösa den
+                    delen fick jag läsa dokumentation, samt använda ett plugin till chart js som hanterar layouten.</p>
+                <h4>Karta</h4>
+                <p>Kartan och sökning på ort var kul att göra. Det flöt på väldigt bra. Efter en föreläsning där GPS
+                    togs upp som ett ämne lade jag till möjligheten att visa aktuell position. Jag hade redan tidigare
+                    lyckats lösa baskravet på den delen i uppgiften, så det passade bra att utöka "min karta" med
+                    att visa position. Den dokumentation som jag hittade angående de delar som min karta består av
+                    upplevde jag som bra och enkel att följa. De exempel som jag hittade var också till stor hjälp.</p>
+                <p>En sista funktion implementerade jag genom att hämta longitud och latitud på den plats som användaren
+                    pekar på, för att sedan skicka de hittade koordinaterna till Nominatim som svarar med platsens namn
+                    om det finns ett namn för platsen.<br>En kul extra funktion.</p>
+
+                <h4>JS Docs</h4>
+                <p>Det var intressant att sätta sig in i JS Docs. Det
+                    fungerar som en kodhjälp för de som evenetuellt kommer att jobba med koden JS-filerna i framtiden.
+                    Man kan skapa bra
+                    förklaringar och till och med exempel på hur koden används. Det ersätter dock inte vanliga
+                    kommentarer i js-filerna och kan inte heller användas inuti funktioner.
+                    Jag har börjat lära mig detta moment, men det känns som om det finns många fler nivåer i ämnet att
+                    lära sig.
+                    <br>Det kommer så småningom!
+
+                </p>
+                <p>JS Docs är installerat som en npm modul i min webbplats.</p>
+            </article>
 
 
 

@@ -195,6 +195,15 @@ h3 {
 }
 
 // scss style
+#mapinfo {
+    width: 100%;
+    border-radius: 5px;
+    margin: 10px auto;
+    padding-left: 10px;
+    background-color: var(--info-color);
+    box-shadow: 10px 5px 25px rgba(37, 34, 34, 0.441);
+}
+
 #info {
     border: 1px gray solid;
     width: 80%;

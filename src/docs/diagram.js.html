@@ -66,6 +66,32 @@ let top6Courses = [];
  */
 let top5Programs = [];
 
+
+/**
+ * Sorterar och begränsar data baserat på typ och antal sökande.
+ * @param {Array} data - Arrayen av dataobjekt att filtrera och sortera.
+ * @param {string} type - Typen av objekt att filtrera (t.ex. "Kurs" eller "Program").
+ * @param {number} limit - Antalet objekt att returnera efter sortering.
+ * @returns {Array} En array med de sorterade och begränsade objekten.
+  @example
+ * // Exempel på användning:
+ * const courses = [
+ *     { type: "Kurs", applicantsTotal: 50 },
+ *     { type: "Kurs", applicantsTotal: 30 },
+ *     { type: "Program", applicantsTotal: 20 },
+ *     { type: "Kurs", applicantsTotal: 60 },
+ *     { type: "Program", applicantsTotal: 25 }
+ * ];
+ * const topCourses = sortByApplicants(courses, "Kurs", 2);
+ * console.log(topCourses); // Output: [{ type: "Kurs", applicantsTotal: 60 }, { type: "Kurs", applicantsTotal: 50 }]
+ */
+function sortByApplicants(data, type, limit) {
+    return data
+        .filter(item => item.type === type)
+        .sort((a, b) => b.applicantsTotal - a.applicantsTotal)
+        .slice(0, limit);
+}
+
 /**
  * Hämta information om kurser och program från en API-endpoint och bearbeta data.
  * 
@@ -86,13 +112,16 @@ async function getInfo() {
         }
         applicants = await response.json();        //data till globala variabeln
 
-        const filteredCourses = applicants.filter(course => course.type === "Kurs");   // filtrerar ut kurserna
-        const sortedCourses = filteredCourses.sort((a, b) => b.applicantsTotal - a.applicantsTotal); // sorterar i stroleksordning på flest totala söknade
-        top6Courses = sortedCourses.slice(0, 6); // Ta de 6 mest sökta kurserna
+        //const filteredCourses = applicants.filter(course => course.type === "Kurs");   // filtrerar ut kurserna
+        //const sortedCourses = filteredCourses.sort((a, b) => b.applicantsTotal - a.applicantsTotal); // sorterar i stroleksordning på flest totala söknade
+        //top6Courses = sortedCourses.slice(0, 6); // Ta de 6 mest sökta kurserna
 
-        const filteredPrograms = applicants.filter(course => course.type === "Program");    // filtrerar ut programmen
-        const sortedPrograms = filteredPrograms.sort((a, b) => b.applicantsTotal - a.applicantsTotal);// Sortera de filtrerade kurserna efter antal sökande
-        top5Programs = sortedPrograms.slice(0, 5) // Ta de 5 mest sökta programmen
+        top6Courses = sortByApplicants(applicants, "Kurs", 6);
+        top5Programs = sortByApplicants(applicants, "Program", 5);
+
+        //const filteredPrograms = applicants.filter(course => course.type === "Program");    // filtrerar ut programmen
+        //const sortedPrograms = filteredPrograms.sort((a, b) => b.applicantsTotal - a.applicantsTotal);// Sortera de filtrerade kurserna efter antal sökande
+        //top5Programs = sortedPrograms.slice(0, 5) // Ta de 5 mest sökta programmen
 
         //Skapa stapeldiagrammet
         createStapleChart();
@@ -151,86 +180,92 @@ let chartInstance;
  * Funktionen hämtar kursnamn och antalet sökande från den filtrerade och sorterade arrayen top6Courses,
  * och skapar ett stapeldiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
  * 
+ * Observera: Denna funktion använder den globala variabeln `top6Courses` som redan är satt.
+ * 
  * @function createStapleChart
  * @returns {void}
  * @param {HTMLElement} ctx - Canvas element där diagrammet ska ritas.
- * @param {Object} config - Konfiguration för diagrammet.
+ * @param {Object} options - Konfiguration för diagrammet.
  */
 function createStapleChart() {
 
-    // Labels med kursnamn    
-    const StapelLabels = top6Courses.map(course => course.name);
+    try {
+        // Labels med kursnamn    
+        const StapelLabels = top6Courses.map(course => course.name);
 
-    //Sätter antalet totalsökande till arrayen StapelData mha .mapfunktionen.   
-    const StapelData = top6Courses.map(course => course.applicantsTotal);
+        //Sätter antalet totalsökande till arrayen StapelData mha .mapfunktionen.   
+        const StapelData = top6Courses.map(course => course.applicantsTotal);
 
-    const fontSize = getFontSize();
+        const fontSize = getFontSize();
 
-    // Döda "instansen" om den finns så chart.js kan skapa nytt diagram vid ändring av storleken av skärm
-    if (chartInstance) {
-        chartInstance.destroy();
-    }
+        // Döda "instansen" om den finns så chart.js kan skapa nytt diagram vid ändring av storleken av skärm
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
 
-    chartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: StapelLabels,
-            datasets: [{
-                label: 'Totalt antal sökande',
-                backgroundColor: 'rgb(249, 53, 95)', // Färg på staplarna
-                borderColor: 'rgb(9, 9, 9)', // Borderfärg på staplarna
-                borderWidth: 1,
-                data: StapelData,
-                // För att visa texten inne i staplarna använder jag ett plugin 
-                datalabels: {
-                    color: 'black', // Färg på texten
-                    align: 'center',
-                    anchor: 'center',
-                    font: {
-                        weight: 'bold',
-                        size: fontSize // Använd dynamisk fontstorlek
-                    },
-                    rotation: -90, // Vrid texten 90 grader
-                    formatter: function (value, context) {
-                        // Dela upp texten i flera rader om den är för lång
-                        const label = StapelLabels[context.dataIndex];
-                        const maxLength = 36; // Max antal tecken per rad
-                        if (label.length > maxLength) {
-                            const chunks = label.match(new RegExp('.{1,' + maxLength + '}', 'g'));  // Dela upp etiketten i bitar ('g' hela strängen)
-                            return chunks.join('\n');                                               // Sätt ihop bitarna ochh lägg till radbrytning mellan bitarna
+        chartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: StapelLabels,
+                datasets: [{
+                    label: 'Totalt antal sökande',
+                    backgroundColor: 'rgb(249, 53, 95)', // Färg på staplarna
+                    borderColor: 'rgb(9, 9, 9)', // Borderfärg på staplarna
+                    borderWidth: 1,
+                    data: StapelData,
+                    // För att visa texten inne i staplarna använder jag ett plugin 
+                    datalabels: {
+                        color: 'black', // Färg på texten
+                        align: 'center',
+                        anchor: 'center',
+                        font: {
+                            weight: 'bold',
+                            size: fontSize // Använd dynamisk fontstorlek
+                        },
+                        rotation: -90, // Vrid texten 90 grader
+                        formatter: function (value, context) {
+                            // Dela upp texten i flera rader om den är för lång
+                            const label = StapelLabels[context.dataIndex];
+                            const maxLength = 36; // Max antal tecken per rad
+                            if (label.length > maxLength) {
+                                const chunks = label.match(new RegExp('.{1,' + maxLength + '}', 'g'));  // Dela upp etiketten i bitar ('g' hela strängen)
+                                return chunks.join('\n');                                               // Sätt ihop bitarna ochh lägg till radbrytning mellan bitarna
+                            }
+                            return label;
+                        },
+                        wordWrap: true
+                    }
+
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        ticks: {
+                            display: false // Dölj vanliga x-axelns etiketter så de inte krockar med texten inne i staplarna
                         }
-                        return label;
                     },
-                    wordWrap: true
-                }
-
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                x: {
-                    ticks: {
-                        display: false // Dölj vanliga x-axelns etiketter så de inte krockar med texten inne i staplarna
+                    y: {
+                        beginAtZero: true,
+                        suggestedMax: Math.max(...StapelData),
+                        ticks: {
+                            stepSize: 100, // Mindre steglängd för fler steg
+                            color: 'rgb(0, 0, 0)' // Färg på y-axelns etiketter
+                        }
                     }
                 },
-                y: {
-                    beginAtZero: true,
-                    suggestedMax: Math.max(...StapelData),
-                    ticks: {
-                        stepSize: 100, // Mindre steglängd för fler steg
-                        color: 'rgb(0, 0, 0)' // Färg på y-axelns etiketter
+                plugins: {
+                    legend: {
+                        display: true
                     }
                 }
-            },
-            plugins: {
-                legend: {
-                    display: true
-                }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.error('Error creating staple chart:', error);
+    }
 }
 
 /**
@@ -247,85 +282,92 @@ let piechartInstance;
  * Funktionen hämtar programnamn och antalet sökande från den filtrerade och sorterade arrayen top5Programs,
  * och skapar ett pajdiagram med hjälp av Chart.js. Om ett diagram redan existerar, förstörs det innan ett nytt skapas.
  * 
+ *  Observera: Denna funktion använder den globala variabeln `top5Programs` som redan är satt.
+ * 
  * @function createPieChart
  * @returns {void}
+ * @param {HTMLElement} ctx - Canvas element där diagrammet ska ritas.
+ * @param {Object} options - Konfiguration för diagrammet.
  */
 
 function createPieChart() {
-    // Hämta programnamn och sökandeantal från top5Programs
-    const labels = top5Programs.map(program => program.name);
-    const data = top5Programs.map(program => program.applicantsTotal);
+    try {// Hämta programnamn och sökandeantal från top5Programs
+        const labels = top5Programs.map(program => program.name);
+        const data = top5Programs.map(program => program.applicantsTotal);
 
-    const ctx = document.getElementById('piediagram').getContext('2d');
+        const ctx = document.getElementById('piediagram').getContext('2d');
 
-    if (piechartInstance) {
-        piechartInstance.destroy();
-    }
+        if (piechartInstance) {
+            piechartInstance.destroy();
+        }
 
-    const fontSize = getFontSize();
+        const fontSize = getFontSize();
 
-    piechartInstance = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: labels, // Etiketter för varje segment i cirkeldiagrammet
-            datasets: [{
-                data: data, // Antal sökande för varje program
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 206, 86)',
-                    'rgb(75, 192, 192)',
-                    'rgb(153, 102, 255)'
-                ],
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top', // Positionera legenden
-                    labels: {
-                        color: 'rgba(0, 0, 0, 0.85)', // Färg på texten i legenden
-                        font: {
-                            size: fontSize
-                        }
-                    }
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function (context) {
-                            const label = context.label || '';
-                            const value = context.raw || 0;
-                            return label + ': ' + value + ' sökande';
-                        }
-                    }
-                },
-                datalabels: {
-                    color: 'black', // Färg på texten
-                    font: {
-                        weight: 'bold',
-                        size: fontSize // Använd dynamisk fontstorlek
-                    },
-                    formatter: function (value, context) {
-                        // Anpassa texten som visas på cirkeldiagrammet
-                        return value;
-                    },
-                    anchor: 'end',
-                    align: 'start',
-                    textAlign: 'center'
-                }
+        piechartInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels, // Etiketter för varje segment i cirkeldiagrammet
+                datasets: [{
+                    data: data, // Antal sökande för varje program
+                    backgroundColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 206, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(153, 102, 255)'
+                    ],
+                    hoverOffset: 4
+                }]
             },
-            layout: {
-                padding: {
-                    left: 10,
-                    right: 10,
-                    top: 10,
-                    bottom: 10
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top', // Positionera legenden
+                        labels: {
+                            color: 'rgba(0, 0, 0, 0.85)', // Färg på texten i legenden
+                            font: {
+                                size: fontSize
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                return label + ': ' + value + ' sökande';
+                            }
+                        }
+                    },
+                    datalabels: {
+                        color: 'black', // Färg på texten
+                        font: {
+                            weight: 'bold',
+                            size: fontSize // Använd dynamisk fontstorlek
+                        },
+                        formatter: function (value, context) {
+                            // Anpassa texten som visas på cirkeldiagrammet
+                            return value;
+                        },
+                        anchor: 'end',
+                        align: 'start',
+                        textAlign: 'center'
+                    }
+                },
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 10,
+                        top: 10,
+                        bottom: 10
+                    }
                 }
             }
-        }
-    });
+        });
+    } catch (error) {
+        console.error('Error creating pie chart:', error);
+    }
 }   </code></pre>
         </article>
     </section>
@@ -336,13 +378,13 @@ function createPieChart() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addMarker">addMarker</a></li><li><a href="global.html#applicants">applicants</a></li><li><a href="global.html#chartInstance">chartInstance</a></li><li><a href="global.html#createPieChart">createPieChart</a></li><li><a href="global.html#createStapleChart">createStapleChart</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#getFontSize">getFontSize</a></li><li><a href="global.html#getGPSPos">getGPSPos</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#marker">marker</a></li><li><a href="global.html#piechartInstance">piechartInstance</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#top5Programs">top5Programs</a></li><li><a href="global.html#top6Courses">top6Courses</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addMarker">addMarker</a></li><li><a href="global.html#applicants">applicants</a></li><li><a href="global.html#chartInstance">chartInstance</a></li><li><a href="global.html#createPieChart">createPieChart</a></li><li><a href="global.html#createStapleChart">createStapleChart</a></li><li><a href="global.html#ctx">ctx</a></li><li><a href="global.html#getFontSize">getFontSize</a></li><li><a href="global.html#getGPSPos">getGPSPos</a></li><li><a href="global.html#getInfo">getInfo</a></li><li><a href="global.html#map">map</a></li><li><a href="global.html#marker">marker</a></li><li><a href="global.html#piechartInstance">piechartInstance</a></li><li><a href="global.html#searchLocation">searchLocation</a></li><li><a href="global.html#sortByApplicants">sortByApplicants</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#top5Programs">top5Programs</a></li><li><a href="global.html#top6Courses">top6Courses</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Feb 21 2025 19:54:45 GMT+0100 (centraleuropeisk normaltid)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Feb 27 2025 11:06:23 GMT+0100 (centraleuropeisk normaltid)
 </footer>
 
 <script> prettyPrint(); </script>
