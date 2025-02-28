@@ -97,7 +97,7 @@
                 <p>Uppgift 5 ska genomföras med hjälp av att på egen hand läsa dokumentation för de olika momenten som
                     ingår i uppgiften. </p>
                 <h3>Ingående moment</h3>
-                <ul>
+                <ul id="startul">
                     <li>Diagram</li>
                     <li>Karta</li>
                     <li>Dokumentation</li>
@@ -111,18 +111,35 @@
                 <p>Jag har installerat chart js och chartjs-plugin-datalabels som mpn moduler i min Parceldrivna
                     webbplats.</p>
                 <h4>Karta</h4>
-                <p>På sidan <a href="map.html">karta</a> finns en karta med sökmöjligheter. Utöver att söka på plats
-                    finns det även en positionsmöjlighet där platsen man är på visas. För att använda denna funktion
-                    krävs att användaren tillåter GPS-positionering via webbläsarens gränssnitt.</p>
+                <p>På sidan <a href="map.html">karta</a> finns en karta med sök&shy;möjligheter. Utöver att söka på
+                    plats
+                    finns det även en positions&shy;möjlighet där platsen man är på visas. För att använda denna
+                    funktion
+                    krävs att användaren tillåter GPS-positionering via webbläsarens gränssnitt. <br>
+                    För att se sin positon trycker man på knappen "GPS"</p>
+                <p>I samband med att jag kände mig redo att lämna in så studerade jag dokumentationen till Nominatum
+                    ytterligare. Då insåg jag att det borde kunna vara möjligt att få positionen genom att klicka på
+                    kartan, och på det sättet få en adress där klicket skedde.
+                    <br>Det gick bra.
+                </p>
+                <p>Nästa idé jag fick handlade om att använda adressen som genereras från klicket och skicka in till en
+                    söktjänst för att kunna visa en länk med adressen som sökkriterie. Om man skulle hamna på ett
+                    intressant ställe när man klickar kan det vara kul att läsa mer om platsen.
+                    För att omvandla plats&shy;informationen till att säkert fungera med URLer använde jag
+                    "encodeURIComponent". Länken placerades i popupelementet som ett tillägg till adressinformationen.
+                </p>
+                <p>Det känns kul att kunna få idéer och sedan genomföra dessa med att leta i manualer.</p>
+
                 <p>Tekniken jag använt på sidan karta (<a href="map.html">map.html</a>) är <a
                         href="https://nominatim.org/">Nominatim</a>,<a href="https://www.openstreetmap.org/">
-                        OpenStreetMap</a> och <a href="https://leafletjs.com/">Leaflet</a>.</p>
+                        OpenStreetMap</a> och <a href="https://leafletjs.com/">Leaflet</a>. Valet av denna teknik är vald utifrån de olika karttjänsternas olika avtal. För mig passas valet av OpenStreetMap bäst.  </p>
+
                 <h4>Dokumentation</h4>
                 <p>Jag har använt <a href="https://jsdoc.app/">JSDocs</a> för dokumentation av min JavaScriptkod. Dock
-                    framgår det inte i uppgiftbeskrivningen hur dokumentationen ska redovisas i uppgiften.
-                    <br>Jag har fått JS Docs att fungera i min utvecklingsmiljö och genererat dokumentation över min
-                    kod. I dagsläget finns det dock inte någon publik länk till de genererade html-sidor som visar
-                    dokumentationen.
+                    framgår det inte i uppgift&shy;beskrivningen hur dokumentationen ska redovisas i uppgiften.
+                    <br>Jag har fått JS Docs att fungera i min utvecklings&shy;miljö och genererat dokumentation över
+                    min kod. I dagsläget finns det dock inte någon publik länk till de genererade html-sidor som visar
+                    dokumenta&shy;tionen.
                 </p>
                 <h3>Erfarenheter - slutsats</h3>
                 <p>Att få jobba på egen hand med dessa uppgifter har varit kul. En del saker flöt på väldigt bra, medan
@@ -136,7 +153,7 @@
                 <p>Att producera både stapeldiagram och cirkeldiagram gick ganska bra. Dock behövdes det lite css-kod
                     för att få stapeldiagrammet "lagom" högt.</p>
                 <p>En svårare uppgift att lösa var att placera texten som beskriver vad staplarna representerar. <br>
-                    Som standard visas den texten under staplarna med en lutning på några grader. För att lättare kunnaF
+                    Som standard visas den texten under staplarna med en lutning på några grader. För att lättare kunna
                     avgöra vad som staplarna representerar ville jag placera texten inne i staplarna. För att lösa den
                     delen fick jag läsa dokumentation, samt använda ett plugin till chart js som hanterar layouten.</p>
                 <h4>Karta</h4>
@@ -147,13 +164,12 @@
                     upplevde jag som bra och enkel att följa. De exempel som jag hittade var också till stor hjälp.</p>
                 <p>En sista funktion implementerade jag genom att hämta longitud och latitud på den plats som användaren
                     pekar på, för att sedan skicka de hittade koordinaterna till Nominatim som svarar med platsens namn
-                    om det finns ett namn för platsen.<br>En kul extra funktion.</p>
+                    om det finns ett namn för platsen. Extra extra blev länken för sökning.<br>En kul extra (extra) funktion.</p>
 
                 <h4>JS Docs</h4>
                 <p>Det var intressant att sätta sig in i JS Docs. Det
-                    fungerar som en kodhjälp för de som evenetuellt kommer att jobba med koden JS-filerna i framtiden.
-                    Man kan skapa bra
-                    förklaringar och till och med exempel på hur koden används. Det ersätter dock inte vanliga
+                    fungerar som en kodhjälp för de som eventuellt kommer att jobba med koden i JS-filerna i framtiden.
+                    Man kan skapa bra förklaringar och till och med exempel på hur koden används. Det ersätter dock inte vanliga
                     kommentarer i js-filerna och kan inte heller användas inuti funktioner.
                     Jag har börjat lära mig detta moment, men det känns som om det finns många fler nivåer i ämnet att
                     lära sig.

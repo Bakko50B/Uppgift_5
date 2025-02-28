@@ -7,7 +7,7 @@
  * @param {Array<number>} [59.3293, 18.0686] - Array med latitud och longitud för kartans centrum.
  * @param {number} 5 - Zoomnivå för kartan.
  */
-const map = L.map('map').setView([59.3293, 18.0686], 5);
+const map = L.map('map').setView([59.3293, 18.0686], 5.3);
 
 /**
  * Lägg till en OpenStreetMap-tile layer till en Leaflet-karta.
@@ -100,7 +100,7 @@ function getGPSPos() {
             console.log(longitude);
 
             // Flytta kartan och lägg till markör
-            addMarker(latitude, longitude, "Din position");
+            addMarker(latitude, longitude, "Du är här!");
         }, function (error) {
             console.error("Fel vid hämtning av position: " + error.message);
         });
@@ -135,20 +135,8 @@ document.getElementById('search-input').addEventListener('keypress', (e) => {
     }
 });
 
-/**
- * Hanterar klickhändelser på kartan för att hämta och visa platsnamn i en popup.
- * 
- * Använder Leaflets inbyggda händelselyssnare
- * 
- * Funktionen lyssnar på klickhändelser på Leaflet-kartan och skickar en omvänd geokodningsförfrågan 
- * till Nominatim OpenStreetMap API för att få platsens namn baserat på klickade koordinater. 
- * Om en plats hittas, visas platsens namn i en popup.
- * 
- * @async
- * @function
- * @param {L.Map} map - Leaflet-kartan som lyssnar på klickhändelser.
- * @returns {void} Visar en popup med platsens namn eller en varning om ingen plats hittas.
- */
+/** 
+ * Sparad "original" map.on function om byte till en funktion som inte genererar en länk utifrån den funna adressen.
 map.on('click', async function (e) {
     const { lat, lng } = e.latlng;
 
@@ -174,6 +162,69 @@ map.on('click', async function (e) {
                 .addTo(map)
                 .bindPopup(`<strong>${displayName}</strong>`)
                 .openPopup();
+        } else {
+            alert('Ingen plats hittades vid den klickade positionen!');
+        }
+    } catch (error) {
+        console.error('Fel vid API-anrop:', error);
+        alert('Kunde inte hämta platsnamnet. Något gick fel!');
+    }
+});
+*/
+
+/**
+ * Hanterar klickhändelser på kartan för att hämta och visa platsnamn i en popup.
+ * 
+ * Använder Leaflets inbyggda händelselyssnare
+ * 
+ * Funktionen lyssnar på klickhändelser på Leaflet-kartan och skickar en omvänd geokodningsförfrågan 
+ * till Nominatim OpenStreetMap API för att få platsens namn baserat på klickade koordinater. 
+ * Om en plats hittas, visas platsens namn i en popup.
+ * 
+ * Dessutom publiceras en länk där man kan få veta mer om platsen
+ * 
+ * @async
+ * @function
+ * @param {L.Map} map - Leaflet-kartan som lyssnar på klickhändelser.
+ * @returns {void} Visar en popup med platsens namn eller en varning om ingen plats hittas.
+ */
+
+
+map.on('click', async function (e) {
+    const { lat, lng } = e.latlng;
+
+    // Anropa Nominatim API för omvänd geokodning
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+    try {
+        const response = await fetch(url, {
+            headers: {
+                'User-Agent': 'MinKartaFrontend/1.0 (tolu2403@student.miun.se)'
+            }
+        });
+        const data = await response.json();
+
+        // Om en plats hittas, visa platsens namn i en popup
+        if (data && data.display_name) {
+            const displayName = data.display_name;
+
+            // Skapa en sökfråga baserad på platsens namn
+            const searchQuery = encodeURIComponent(displayName);
+            const searchUrl = `https://www.google.com/search?q=${searchQuery}`;
+
+            // Om markör redan finns - ta bort den
+            if (marker) map.removeLayer(marker);
+
+            // Lägg till en ny markör vid klickpositionen
+            marker = L.marker([lat, lng])
+                .addTo(map)
+                .bindPopup(`<strong>${displayName}</strong><br><a href="${searchUrl}" target="_blank">Mer information om platsen!</a>`)
+                .openPopup();
+
+            // test
+
+            console.log("Fullt API-svar:", data);
+            console.log("Adressdata:", data.address);
+
         } else {
             alert('Ingen plats hittades vid den klickade positionen!');
         }
