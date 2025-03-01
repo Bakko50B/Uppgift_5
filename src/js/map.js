@@ -138,6 +138,7 @@ document.getElementById('search-input').addEventListener('keypress', (e) => {
 /** 
  * Sparad "original" map.on function om byte till en funktion som inte genererar en länk utifrån den funna adressen.
 map.on('click', async function (e) {
+    // destructing assignment
     const { lat, lng } = e.latlng;
 
     // Anropa Nominatim API för omvänd geokodning
@@ -190,7 +191,9 @@ map.on('click', async function (e) {
  * @returns {void} Visar en popup med platsens namn eller en varning om ingen plats hittas.
  */
 map.on('click', async function (e) {
+    // destructing assignment
     const { lat, lng } = e.latlng;
+
 
     // Anropa Nominatim API för omvänd geokodning
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
