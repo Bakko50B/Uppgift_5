@@ -172,6 +172,7 @@ map.on('click', async function (e) {
 });
 */
 
+
 /**
  * Hanterar klickhändelser på kartan för att hämta och visa platsnamn i en popup.
  * 
@@ -188,8 +189,6 @@ map.on('click', async function (e) {
  * @param {L.Map} map - Leaflet-kartan som lyssnar på klickhändelser.
  * @returns {void} Visar en popup med platsens namn eller en varning om ingen plats hittas.
  */
-
-
 map.on('click', async function (e) {
     const { lat, lng } = e.latlng;
 
