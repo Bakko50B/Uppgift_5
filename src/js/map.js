@@ -191,7 +191,7 @@ map.on('click', async function (e) {
  * @returns {void} Visar en popup med platsens namn eller en varning om ingen plats hittas.
  */
 map.on('click', async function (e) {
-    // destructing assignment
+    // destructing assignment   
     const { lat, lng } = e.latlng;
 
 
