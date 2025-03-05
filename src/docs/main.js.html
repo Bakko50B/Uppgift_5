@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: mobilemeny.js</title>
+    <title>JSDoc: Source: main.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: mobilemeny.js</h1>
+    <h1 class="page-title">Source: main.js</h1>
 
     
 
@@ -26,39 +26,28 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>"use strict"
-
-// elements
-let openBtn = document.getElementById("open-menu");
-let closeBtn = document.getElementById("close-menu");
-
-//eventlisteners
-openBtn.addEventListener("click", toggleMenu);
-closeBtn.addEventListener("click", toggleMenu);
+            <pre class="prettyprint source linenums"><code>"use strict";
+/**
+ * Denna fil används i footer för att ange dagens datum
+ * 
+ */
+const MyDateEl = document.getElementById("date");
+const today = new Date();
+const date = String(today.getDate()).padStart(2, '0');
+const month = String(today.getMonth() + 1).padStart(2, '0'); // Månaderna är 0-indexerade, så vi lägger till 1
+const year = today.getFullYear();
 
 /**
- * Funktion för att växla visningen av navigeringsmenyn.
- *&lt;br>
- Växelvis visas respektive döljs mobilmenyn (hamburgerstil)
- * @function
- * @name toggleMenu
- * @returns {void}
+ *Anvönde de uträknade variablerna för att sätta till fullDate som sedan används i myDateEl.
  */
-function toggleMenu() {
-    let navMenuEl = document.getElementById("nav-menu");
+const fullDate = `${year}-${month}-${date}`;
 
-    let style = window.getComputedStyle(navMenuEl);
-    
-    if(style.display === "none"){
-        navMenuEl.style.display = "block";
-        setTimeout(() =>{
-        navMenuEl.style.opacity = 1;}, 5);
-    } else {
-        navMenuEl.style.display = "none";
-        navMenuEl.style.opacity = 0;
-    }
 
-}</code></pre>
+MyDateEl.innerHTML =
+`    
+    Dagens datum:   &lt;br>
+    ${fullDate}
+`;</code></pre>
         </article>
     </section>
 
